@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="_page">
-    <title>Create New Task</title>
+    <title><g:if test="${listOfTasks}">Create New Task</g:if><g:else>Completed Tasks</g:else></title>
 </head>
 
 <body>
@@ -14,6 +14,7 @@
     %>
 
     <g:if test="${listOfTasks}">
+        <h2>My Tasks</h2>
         <div class="tab-content">
             <g:form class="form-group" controller="taskList" action="save" style="margin-bottom: 20px">
                 <input class="form-control mr-sm-2" type="search" placeholder="My To-do Task" aria-label="Task"
@@ -24,6 +25,7 @@
         <%Tasks = listOfTasks%>
     </g:if>
     <g:else>
+        <h2>Completed Tasks</h2>
         <%Tasks = completedTask%>
     </g:else>
 
@@ -35,7 +37,7 @@
             <g:if test="${listOfTasks}"><th class="alert-success">Check</th></g:if>
             <g:if test="${completedTask}"><th class="alert-success"> Date Completed</th> </g:if>
 
-            <g:each in="${Tasks}" var="tasks">
+            <g:each in="${Tasks.reverse()}" var="tasks">
                 <g:if test="${(!tasks.isCompleted && listOfTasks) || (tasks.isCompleted) && completedTask}">
                     <tr>
                         <td>${tasks.dateCreated}</td>
